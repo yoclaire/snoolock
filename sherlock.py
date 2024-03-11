@@ -6,14 +6,20 @@ import getopt
 
 from reddit_user import RedditUser, UserNotFoundError, NoDataError
 
-print "Processing user %s" % sys.argv[1]
-start = datetime.datetime.now()
-try:
-  u = RedditUser(sys.argv[1])
-  print u
-except UserNotFoundError:
-  print "User %s not found" % sys.argv[1]
-except NoDataError:
-  print "No data available for user %s" % sys.argv[1]
+if len(sys.argv) < 2:
+    print("Usage: script.py <username>")
+    sys.exit(1)
 
-print "Processing complete... %s" % (datetime.datetime.now() - start)
+username = sys.argv[1]
+print(f"Processing user {username}")
+start = datetime.datetime.now()
+
+try:
+    user = RedditUser(username)
+    print(user)
+except UserNotFoundError:
+    print(f"User {username} not found")
+except NoDataError:
+    print(f"No data available for user {username}")
+
+print(f"Processing complete... {datetime.datetime.now() - start}")
